@@ -36,4 +36,4 @@ Let's get on with it!
 If this project help you reduce time to develop, you can give me a cup of coffee :) 
 
 
-[![paypal](https://raw.githubusercontent.com/SeyitDuman/sd_eicmslinks/master/views/img/paypal_donate.jpg?token=ABE7NI4SIWEWFG5RETQ4CFS7YJXUS)](https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=7DYHRZRNJBXQ2)
+[![paypal](https://raw.githubusercontent.com/SeyitDuman/sd_eicmslinks/master/views/img/paypal_donate.jpg)](https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=7DYHRZRNJBXQ2)
