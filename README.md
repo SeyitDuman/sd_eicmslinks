@@ -11,6 +11,11 @@ It allows you to insert dynamics links using rich editor TinyMCE, like :
  - Supplier
  - Manufacturer
  - All other link ( account / contact / cart / search / sitemap ... )
+ 
+Exemple :
+
+<img src="https://raw.githubusercontent.com/SeyitDuman/sd_eicmslinks/master/views/img/screenshot_1.jpg" alt="Ei cms links configuration">
+
 
 
 ## :exclamation: Compatibility
