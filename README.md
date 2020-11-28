@@ -28,7 +28,7 @@ Let's get on with it!
 
 ## Install
 
-1. Upload the zip file via the PrestaShop back-office
+1. Upload the zip file "sd_eicmslinks.zip" via the PrestaShop back-office
 2. Click the "Install" button
 3. Module add automatically plugin to rich editor TinyMCE
 
