@@ -32,6 +32,9 @@ Released under the MIT license - http://opensource.org/licenses/MIT
 
 Let's get on with it!
 
+## Contributing
+PR on branch develop please
+
 ## Install
 
 1. Download ZIP from Latest release.
