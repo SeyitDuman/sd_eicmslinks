@@ -4,9 +4,25 @@
     init: function (ed, url) {
 
       ed.addCommand('mceCmsLinks', function () {
+
+        var local = "";
+        if ($("#form_switch_language").length) {
+
+          // Exemple : Product
+          local = $("#form_switch_language").val();
+        } else if ($('.tab-pane.translation-field.active').length) {
+
+          // Exemple : page CMS / Cageorie
+          local = $('.tab-pane.translation-field.active').data().locale;
+        }else if($('.form-group.translatable-field:visible .btn.btn-default.dropdown-toggle').length){
+
+          // Ancien version translatable-field
+          local = $.trim($('.form-group.translatable-field:visible .btn.btn-default.dropdown-toggle').first().text());
+        }
+
         ed.windowManager.open({
-          title: '',
-          file: url + '/eicmslinks.php?eicmslinks_sel=' + encodeURIComponent(tinymce.activeEditor.selection.getContent({format: 'text'})) + "&id_language=" + id_language,
+          title: 'EicmsLinks',
+          file: url + '/eicmslinks.php?eicmslinks_sel=' + encodeURIComponent(tinymce.activeEditor.selection.getContent({format: 'text'})) + "&id_language=" + id_language + "&local=" + local,
           width: 650,
           height: 400,
           inline: 1
@@ -16,7 +32,7 @@
 
       });
       ed.addButton('eicmslinks', {
-        title: '',
+        title: 'EicmsLinks',
         cmd: 'mceCmsLinks',
         icons: 'eicmslinks',
         className: 'ckeditor_eicmslinks_btn',
