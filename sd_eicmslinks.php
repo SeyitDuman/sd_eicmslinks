@@ -61,7 +61,7 @@ class Sd_eicmslinks extends Module
     {
         $this->name = 'sd_eicmslinks';
         $this->tab = 'others';
-        $this->version = '1.0.1';
+        $this->version = '1.0.2';
         $this->author = 'Seyit Duman';
         $this->need_instance = 0;
 
@@ -171,6 +171,7 @@ class Sd_eicmslinks extends Module
     /**
      * @param $table
      * @param $field
+     *
      * @return bool
      */
     public function tableExistSql($table): bool
@@ -808,7 +809,6 @@ class Sd_eicmslinks extends Module
      */
     public function displayTinyMcePopup()
     {
-
         $ajax_page = $this->context->link->getAdminLink('AdminModules') . '&configure=' . $this->name;
         $ajax_page = str_replace('/1/index.php', '/' . Configuration::get('EICMSLINKS_ADMIN_PATH') . '/index.php', $ajax_page);
 

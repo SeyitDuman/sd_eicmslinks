@@ -2,7 +2,7 @@
 <module>
     <name>sd_eicmslinks</name>
     <displayName><![CDATA[Eicmslinks]]></displayName>
-    <version><![CDATA[1.0.0]]></version>
+    <version><![CDATA[1.0.2]]></version>
     <description><![CDATA[Ajoutez des liens internes &agrave; votre contenu pour cr&eacute;&eacute; un maillage et renforcer votre SEO]]></description>
     <author><![CDATA[Seyit Duman]]></author>
     <tab><![CDATA[others]]></tab>
