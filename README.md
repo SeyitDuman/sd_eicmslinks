@@ -34,11 +34,8 @@ Let's get on with it!
 
 ## Install
 
-1. Download ZIP.
-2. Extract ZIP (dont extract to another folder or make sure you will do following steps on MAIN folder, in which all source files are).
-3. Rename folder to sd_eicmslinks
-4. ZIP sd_eicmslinks folder.
-5. Install it through prestashop back office.
+1. Download ZIP from Latest release.
+2. Install it through prestashop back office in "Alls Shop" Context if in multistore
 6. After install, module add automatically plugin to rich editor TinyMCE
 
 ## Compiling assets
@@ -46,7 +43,7 @@ Let's get on with it!
 
 We use _Webpack_ to compile our javascript and scss files.
 In order to compile those files, you must :
-1. have _Node 10+_ installed locally
+1. have _Node 14_ installed locally
 2. run `npm install` in the root folder to install dependencies
 3. then run `npm run watch` to compile assets and watch for file changes
 
