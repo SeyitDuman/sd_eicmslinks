@@ -5,6 +5,7 @@ Add Cms Links tools in tinyMce Editor for prestashop 1.7 [![Donate](https://img.
 
 It allows you to insert dynamics links using rich editor TinyMCE, like :
  - Product
+ - Product Files
  - Category product
  - Cms
  - Category Cms
