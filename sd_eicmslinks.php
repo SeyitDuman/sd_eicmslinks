@@ -61,7 +61,7 @@ class Sd_eicmslinks extends Module
     {
         $this->name = 'sd_eicmslinks';
         $this->tab = 'others';
-        $this->version = '1.0.2';
+        $this->version = '1.0.3';
         $this->author = 'Seyit Duman';
         $this->need_instance = 0;
 
@@ -346,8 +346,9 @@ class Sd_eicmslinks extends Module
         return $content;
     }
 
-    public static function textToSecureHtmlAttribute($text){
-        $text = str_replace(array("'", '"', "`"), '', $text);
+    public static function textToSecureHtmlAttribute($text)
+    {
+        $text = str_replace(["'", '"', '`'], '', $text);
     }
 
     /**
@@ -1026,37 +1027,6 @@ class Sd_eicmslinks extends Module
         die(json_encode(['success' => true, 'html' => $ret]));
     }
 
-    /**
-     * @throws PrestaShopException
-     */
-    public function ajaxProcessGetCategoriesList()
-    {
-        $id_lang = (int)$_GET['id_language'];
-        $id_shop = (int)$_GET['id_shop'];
-
-        $id_category = 0;
-
-        if (Shop::getContext() == Shop::CONTEXT_SHOP) {
-            $cat_mapper = Category::getRootCategory($id_lang, new Shop($id_shop, $id_lang));
-
-            if ($cat_mapper !== false) {
-                $id_category = (int)$cat_mapper->id_category;
-            }
-        }
-
-        $tree_categories_helper = new HelperTreeCategories('categories-treeview', '', $id_category, $id_lang);
-
-        $tree_categories_helper->setLang($id_lang);
-        $tree_categories_helper->setShop($id_shop);
-        $tree_categories_helper->setRootCategory($id_category);
-
-        $html = $tree_categories_helper
-//            ->setAttribute()
-            ->setInputName('id-category-for-insert')
-            ->render();
-
-        die(json_encode(['success' => true, 'html' => trim($html)]));
-    }
 
     /**
      * @return mixed
@@ -1118,5 +1088,42 @@ class Sd_eicmslinks extends Module
     public function isUsingNewTranslationSystem()
     {
         return true;
+    }
+
+
+    /**
+     * @throws PrestaShopException
+     */
+    public function ajaxProcessGetCategoriesList()
+    {
+        $id_lang = (int)$_GET['id_language'];
+        $id_shop = (int)$_GET['id_shop'];
+
+        $id_category = 0;
+
+        $cat_mapper = Category::getRootCategory($id_lang, new Shop($id_shop, $id_lang));
+
+        if ($cat_mapper !== false) {
+            $id_category = (int)$cat_mapper->id_category;
+        }
+
+        $tree_categories_helper = new HelperTreeCategoriesCore('categories-treeview', null, $id_category, $id_lang, true);
+
+        $tree_categories_helper
+            ->setLang($id_lang)
+            ->setShop($id_shop)
+            ->setRootCategory($id_category)
+            ->setUseSearch(false) // si true problème event
+            ->setUseCheckBox(false)
+            ->setSelectedCategories(array())
+            ->setNoJS(false) // si true error JS core
+            ->setFullTree(true)
+            ->setChildrenOnly(false)
+            ->setInputName('id-category-for-insert')
+        ;
+
+        $html = $tree_categories_helper->render();
+
+        die(json_encode(['success' => true, 'html' => trim($html)]));
     }
 }

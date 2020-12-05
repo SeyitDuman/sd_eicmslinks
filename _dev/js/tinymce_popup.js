@@ -24,6 +24,7 @@ $(document).ready(function () {
       }
     });
   }
+
   /**
    * Récuprère la liste des page cms
    * @private
@@ -243,7 +244,7 @@ $(document).ready(function () {
       // Récupération ajax des autres types de pages
       _getOtherLink();
 
-    }else if (anchor_rel == "files_product_content") {
+    } else if (anchor_rel == "files_product_content") {
 
       // Récupération ajax des autres types de pages
       _getFileLink();
@@ -267,6 +268,7 @@ $(document).ready(function () {
     $('#' + elem_to_show).css('display', 'block');
 
     _loadContent($(this).attr('rel'));
+
   };
 
   /**
@@ -296,20 +298,41 @@ $(document).ready(function () {
   };
 
   /**
+   * Insertion d'un lien de catégorie produit
+   */
+  var _categoryProductClick = function (e) {
+    addLink('{{categoryproduct url=' + $(this).val() + ' data-idshop=' + window.parent.id_shop + ' data-idlang=' + id_language_popup + '}}');
+  };
+
+  /**
+   * Permet d'associer la recherche à l'ajout de lien
+   * @param e
+   * @private
+   */
+  var _categoryProductSearchInputClick = function (e) {
+    console.log(e);
+    console.log($.trim(e.target.textContent));
+
+    $('#category_product_content .tree-toggler').each(function (index, elt) {
+      console.log($.trim($(elt).text()));
+
+
+      if ($.trim($(elt).text()) === $.trim(e.target.textContent)) {
+        console.log($(elt));
+        console.log($(elt).closest('.tree-item-name'));
+        console.log($(elt).closest('.tree-item-name').find('input'));
+        $(elt).closest('.tree-item-name').find('input').trigger('click');
+        return false;
+      }
+    });
+  };
+
+  /**
    * Insertion d'un lien de catégorie cms
    */
   var _categoryLabelClick = function () {
     addLink('{{category url=' + $(this).prev('input').val() + '}}');
   };
-
-
-  /**
-   * Insertion d'un lien de catégorie produit
-   */
-  var _categoryProductClick = function () {
-    addLink('{{categoryproduct url=' + $(this).val() + ' data-idshop=' + window.parent.id_shop + ' data-idlang=' + id_language_popup + '}}');
-  };
-
 
   /**
    * Insertion d'un lien de catégorie cms
@@ -357,19 +380,22 @@ $(document).ready(function () {
    */
   var _initEvent = function () {
 
+
     $('body').on('click', '.show-block-link', _tabLinkClick);
     $('body').on('click', '.category_label', _categoryLabelClick);
     $('body').on('keyup', '#searchInput', _searchInputKeyUp);
-    $('body').on('click', '#categories-treeview li span input[type=radio]', _categoryProductClick);
+    $('body').on("click", '#categories-treeview li span input[type=radio]', _categoryProductClick);
+    $('body').on("click", '#category_product_content .tt-suggestion p', _categoryProductSearchInputClick);
     $('body').on('click', '#categories-tree input', _categoryCmsTreeClick);
     $('body').on('change', '[name=allOtherPage]', _allOtherPageChange);
     $('body').on('change', '[name=allManufacturers]', _allManufacturersChange);
     $('body').on('change', '[name=allSuppliers]', _allSuppliersChange);
 
-    $('a[rel=product_content]').trigger('click');
-  }
+  };
 
   // initialisation
   _initEvent();
+
+  $('a[rel=product_content]').trigger('click');
 
 });

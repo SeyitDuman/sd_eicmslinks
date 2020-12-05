@@ -151,9 +151,7 @@
   /**
    * Ajout du lien d'ans l'éditeur
    */
-  function addLink(url, id_lang, id_shop) {
-    console.log("addLink");
-    console.log(url, id_lang, id_shop);
+  function addLink(url) {
 
     if ($('#eicmslinks_textlink').val() === "") {
       alert("Veuillez d'abord renseigner le texte du lien");
