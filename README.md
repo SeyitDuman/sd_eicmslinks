@@ -11,7 +11,7 @@ It allows you to insert dynamics links using rich editor TinyMCE, like :
  - Supplier
  - Manufacturer
  - All other link ( account / contact / cart / search / sitemap ... )
- 
+
 Exemple :
 
 <img src="https://raw.githubusercontent.com/SeyitDuman/sd_eicmslinks/master/views/img/screenshot_1.jpg" alt="Ei cms links configuration">
@@ -23,9 +23,9 @@ Exemple :
  - PrestaShop 1.7.1 to 1.7.x :white_check_mark:
  - Multilanguage :white_check_mark:
  - Multistore :white_check_mark:
- - Module using custom TinyMCE plugin :x: 
- 
- 
+ - Module using custom TinyMCE plugin :x:
+
+
 ## License
 Released under the MIT license - http://opensource.org/licenses/MIT
 
@@ -40,9 +40,24 @@ Let's get on with it!
 5. Install it through prestashop back office.
 6. After install, module add automatically plugin to rich editor TinyMCE
 
+## Compiling assets
+**For development**
+
+We use _Webpack_ to compile our javascript and scss files.
+In order to compile those files, you must :
+1. have _Node 10+_ installed locally
+2. run `npm install` in the root folder to install dependencies
+3. then run `npm run watch` to compile assets and watch for file changes
+
+**For production**
+
+Run `npm run build` to compile for production.
+Files are minified, `console.log` and comments dropped.
 
 ## :eyes: Donation
-If this project help you reduce time to develop, you can give me a cup of coffee :) 
+If this project help you reduce time to develop, you can give me a cup of coffee :)
 
 
 [![paypal](https://raw.githubusercontent.com/SeyitDuman/sd_eicmslinks/master/views/img/paypal_donate.jpg)](https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=7DYHRZRNJBXQ2)
+
+

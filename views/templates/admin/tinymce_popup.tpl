@@ -24,15 +24,23 @@
          href="#">{l s='Marque de produit' mod='sd_eicmslinks'}</a></li>
   <li><a class="show-block-link" rel="fournisseur_product_content"
          href="#">{l s='Fournisseur de produit' mod='sd_eicmslinks'}</a></li>
+  <li><a class="show-block-link" rel="files_product_content"
+         href="#">{l s='Lien fichier' mod='sd_eicmslinks'}</a></li>
   <li><a class="show-block-link" rel="autres_content"
          href="#">{l s='Autres' mod='sd_eicmslinks'}</a></li>
 </ul>
 
 <div class="input-group">
-  <label for="eicmslinks_textlink">{l s='Texte du lien :' mod='sd_eicmslinks'}</label>
-  <div id="eicmslinks_textlink_wrapper"><input type="text" id="eicmslinks_textlink"
-                                               onkeyup="textlinkKeyUp()"/><span>{l s='Ce champ est requis' mod='sd_eicmslinks'}</span>
+  <div class="relative">
+    <label for="eicmslinks_textlink">{l s='Texte du lien :' mod='sd_eicmslinks'}</label>
+    <div id="eicmslinks_textlink_wrapper">
+      <input type="text" id="eicmslinks_textlink"
+             onkeyup="textlinkKeyUp()"/><span>{l s='Ce champ est requis' mod='sd_eicmslinks'}</span><br/>
+    </div>
   </div>
+{*  <div class="relative">*}
+{*    <label for="eicmslinks_textlink_option_ouverture">{l s='Ouverture nouvelle fenetre' mod='sd_eicmslinks'} : <input type="checkbox" id="eicmslinks_textlink_option_ouverture" name="eicmslinks_textlink_option_ouverture" value="1"/></label>*}
+{*  </div>*}
 </div>
 
 <div class="clearfix"></div>
@@ -64,6 +72,10 @@
 <div id="fournisseur_product_content" class="link-block">
   <!-- Content dynamicaly loaded -->
   {l s='Les fournisseurs de produits' mod='sd_eicmslinks'}
+</div>
+<div id="files_product_content" class="link-block">
+  <!-- Content dynamicaly loaded -->
+  {l s='Lien fichier' mod='sd_eicmslinks'}
 </div>
 <div id="autres_content" class="link-block">
   <!-- Content dynamicaly loaded -->

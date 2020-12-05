@@ -18,16 +18,25 @@
  * versions in the future. If you wish to customize PrestaShop for your
  * needs please refer to http://www.prestashop.com for more information.
  *
- *  @author    Hennes Hervé <contact@h-hennes.fr>
- *  @copyright 2013-2015 Hennes Hervé
- *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @author    Hennes Hervé <contact@h-hennes.fr>
+ * @copyright 2013-2015 Hennes Hervé
+ * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  http://www.h-hennes.fr/blog/
  */
 define('_PS_ADMIN_DIR_', 1);
 
-require_once( './../../../../config/config.inc.php');
-include_once(_PS_MODULE_DIR_ . '/sd_eicmslinks/sd_eicmslinks.php');
+require_once('./../../../../config/config.inc.php');
+
+$cookie = new Cookie('psAdmin', '', (int)Configuration::get('PS_COOKIE_LIFETIME_BO'));
+
+if (isset($cookie->id_employee) && $cookie->id_employee) {
+
+    include_once(_PS_MODULE_DIR_ . '/sd_eicmslinks/sd_eicmslinks.php');
 
 //Affichage de la popup d'insertion des cms
-$eicmslink = new Sd_eicmslinks();
-$eicmslink->displayTinyMcePopup();
+    $eicmslink = new Sd_eicmslinks();
+    $eicmslink->displayTinyMcePopup();
+
+} else {
+    die('No employee logged in.');
+}

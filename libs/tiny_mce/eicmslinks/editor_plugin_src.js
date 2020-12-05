@@ -1,16 +1,12 @@
 (function (tinymce) {
 
-
   tinymce.create('tinymce.plugins.eicmslinksPlugin', {
     init: function (ed, url) {
-
-      console.log(ed);
-
 
       ed.addCommand('mceCmsLinks', function () {
         ed.windowManager.open({
           title: 'Ajouter un lien dynamique',
-          file: url + '/eicmslinks.php?eicmslinks_sel=' + encodeURIComponent(tinymce.activeEditor.selection.getContent({format: 'text'}))+ "&id_language="+id_language,
+          file: url + '/eicmslinks.php?eicmslinks_sel=' + encodeURIComponent(tinymce.activeEditor.selection.getContent({format: 'text'})) + "&id_language=" + id_language,
           width: 650,
           height: 400,
           inline: 1
@@ -29,7 +25,7 @@
     },
     getInfo: function () {
       return {
-        longname: 'Ei Cms Links',
+        longname: 'EicmsLinks',
         author: 'seyo41@gmail.com',
         authorurl: '',
         infourl: '',

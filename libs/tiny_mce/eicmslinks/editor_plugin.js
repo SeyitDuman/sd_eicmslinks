@@ -3,7 +3,6 @@
   tinymce.create('tinymce.plugins.eicmslinksPlugin', {
     init: function (ed, url) {
 
-      console.log(ed);
       ed.addCommand('mceCmsLinks', function () {
         ed.windowManager.open({
           title: 'Ajouter un lien dynamique',
@@ -26,7 +25,7 @@
     },
     getInfo: function () {
       return {
-        longname: 'Ei Cms Links',
+        longname: 'EicmsLinks',
         author: 'seyo41@gmail.com',
         authorurl: '',
         infourl: '',

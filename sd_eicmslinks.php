@@ -62,7 +62,7 @@ class Sd_eicmslinks extends Module
     {
         $this->name = 'sd_eicmslinks';
         $this->tab = 'others';
-        $this->version = '1.0.0';
+        $this->version = '1.0.1';
         $this->author = 'Seyit Duman';
         $this->need_instance = 0;
 
@@ -224,12 +224,14 @@ class Sd_eicmslinks extends Module
         $link_model = new Link();
         $content = urldecode($content);
 
+
         $content = self::updateLinksCMS($link_model, $content);
         $content = self::updateLinksCategoryCms($link_model, $content);
         $content = self::updateLinksProduct($link_model, $content);
         $content = self::updateLinksCategoryProduct($link_model, $content);
         $content = self::updateLinksManufacturers($link_model, $content);
         $content = self::updateLinksSuppliers($link_model, $content);
+        $content = self::updateLinksFiles($link_model, $content);
 
         $content = self::removeDeadLinks($content);
 
@@ -452,6 +454,33 @@ class Sd_eicmslinks extends Module
                 }
 
 
+            }
+        }
+
+        return $content;
+    }
+
+    /**
+     * Mise à jour des liens vers les fichiers de produits
+     *
+     * @param Link $link_model
+     * @param string $content
+     * @return string|string[]|null
+     */
+    public static function updateLinksFiles(Link $link_model, string $content)
+    {
+
+        preg_match_all('#{{filelink url=([0-9+]{0,12}) data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $content, $links);
+
+        if (isset($links[1]) && sizeof($links[1])) {
+            foreach ($links[1] as $key => $link_id) {
+
+                $idLang = (int)$links[3][$key];
+                $idShop = (int)$links[2][$key];
+
+                $attachment_url = $link_model->getPageLink('attachment', true, $idLang, "id_attachment=" . (int)$link_id, false, $idShop, false);
+
+                $content = preg_replace('#{{filelink url=' . $link_id . ' data-idshop=' . $idShop . ' data-idlang=' . $idLang . '}}#', $attachment_url . '" download="download"', $content);
             }
         }
 
@@ -802,7 +831,6 @@ class Sd_eicmslinks extends Module
      */
     public function displayTinyMcePopup()
     {
-
         $ajax_page = $this->context->link->getAdminLink('AdminModules') . '&configure=' . $this->name;
         $ajax_page = str_replace("/1/index.php", "/" . Configuration::get('EICMSLINKS_ADMIN_PATH') . "/index.php", $ajax_page);
 
@@ -816,8 +844,11 @@ class Sd_eicmslinks extends Module
         $this->context->smarty->assign('js_file', __PS_BASE_URI__ . 'modules/' . $this->name . '/views/js/tinymce_popup.js');
         $this->context->smarty->assign('css_file', __PS_BASE_URI__ . 'modules/' . $this->name . '/views/css/tinymce_popup.css');
 
-
-        echo $this->display(__FILE__, 'views/templates/admin/tinymce_popup.tpl');
+        if (false === Module::isEnabled($this->name)) {
+            echo $this->display(__FILE__, 'views/templates/admin/module_disabled_msg.tpl');
+        } else {
+            echo $this->display(__FILE__, 'views/templates/admin/tinymce_popup.tpl');
+        }
     }
 
     /**
@@ -839,6 +870,51 @@ class Sd_eicmslinks extends Module
         }
 
         return $alternativeLangs;
+    }
+
+
+    /**
+     * Get attachments.
+     *
+     * @param int $idLang Language ID
+     *
+     * @return array|false|mysqli_result|PDOStatement|resource|null Database query result
+     */
+    public static function getAttachments($idLang)
+    {
+        return Db::getInstance()->executeS(
+            '
+			SELECT *
+			FROM ' . _DB_PREFIX_ . 'attachment_lang al
+			WHERE al.id_lang = ' . (int)$idLang . '
+			'
+        );
+    }
+
+    /**
+     *
+     */
+    public function ajaxProcessGetFileLinkList()
+    {
+        $id_lang = (int)$_GET['id_language'];
+        $id_shop = (int)$_GET['id_shop'];
+
+        $attachments = self::getAttachments($id_lang);
+
+        $html = '';
+
+        if ($attachments) {
+//            $html .= $this->transMe("Les fichiers sont commums à toutes les boutiques");
+            $html .= '<ul>';
+            foreach ($attachments as $attachment) {
+                $html .= '<li><a href="#" onclick="addLink(\'{{filelink url=' . $attachment['id_attachment'] . ' data-idshop=' . $id_shop . ' data-idlang=' . $id_lang . '}}\')">' . $attachment['name'] . '</a></li>';
+            }
+            $html .= '</ul>';
+        } else {
+            $html .= $this->transMe("Aucun fichier trouvé");
+        }
+
+        die(json_encode(["success" => true, "html" => trim($html)]));
     }
 
     /**
