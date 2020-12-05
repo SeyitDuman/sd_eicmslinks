@@ -279,7 +279,7 @@ class Sd_eicmslinks extends Module
                     $category_product_links_url = Sd_eicmslinks::removeBaseUrl($category_product_links_url);
                 }
 
-                $content = preg_replace('#{{categoryproduct url=' . $category_product_links_id . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $category_product_links_url . '" title="' . htmlspecialchars($cat_mapper->name) . '"', $content);
+                $content = preg_replace('#{{categoryproduct url=' . $category_product_links_id . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $category_product_links_url . '" title="' . htmlspecialchars($cat_mapper->name) . '', $content);
             }
         }
 
@@ -309,7 +309,7 @@ class Sd_eicmslinks extends Module
                     $supplier_links_url = Sd_eicmslinks::removeBaseUrl($supplier_links_url);
                 }
 
-                $content = preg_replace('#{{suppliers url=' . $supplier_links_id . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $supplier_links_url . '" title="' . htmlspecialchars($supplier_mapper->name) . '"', $content);
+                $content = preg_replace('#{{suppliers url=' . $supplier_links_id . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $supplier_links_url . '" title="' . htmlspecialchars($supplier_mapper->name) . '', $content);
             }
         }
 
@@ -339,11 +339,15 @@ class Sd_eicmslinks extends Module
                     $manufacture_links_url = Sd_eicmslinks::removeBaseUrl($manufacture_links_url);
                 }
 
-                $content = preg_replace('#{{manufacturers url=' . $manufacture_links_id . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $manufacture_links_url . '" title="' . htmlspecialchars($manufacture_mapper->name) . '"', $content);
+                $content = preg_replace('#{{manufacturers url=' . $manufacture_links_id . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $manufacture_links_url . '" title="' . htmlspecialchars($manufacture_mapper->name) . '', $content);
             }
         }
 
         return $content;
+    }
+
+    public static function textToSecureHtmlAttribute($text){
+        $text = str_replace(array("'", '"', "`"), '', $text);
     }
 
     /**
@@ -371,7 +375,7 @@ class Sd_eicmslinks extends Module
                     $product_link_url = Sd_eicmslinks::removeBaseUrl($product_link_url);
                 }
 
-                $content = preg_replace('#{{product url=' . $product_link . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $product_link_url . '" title="' . htmlspecialchars($product_mapper->name) . '"', $content);
+                $content = preg_replace('#{{product url=' . $product_link . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $product_link_url . '" title="' . addslashes(htmlspecialchars($product_mapper->name)) . '', $content);
             }
         }
 
@@ -404,7 +408,7 @@ class Sd_eicmslinks extends Module
                     $link_url = Sd_eicmslinks::removeBaseUrl($link_url);
                 }
 
-                $content = preg_replace('#{{cms url=' . $cms_id . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $link_url . '" title="' . htmlspecialchars($cms_mapper->meta_title[$idLang]) . '"', $content);
+                $content = preg_replace('#{{cms url=' . $cms_id . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $link_url . '" title="' . htmlspecialchars($cms_mapper->meta_title[$idLang]) . '', $content);
             }
         }
 
@@ -432,14 +436,14 @@ class Sd_eicmslinks extends Module
                 $cat_mapper = new CMSCategory((int)$category_link, $idLang, $idShop);
                 if (false !== $cat_mapper && (bool)$cat_mapper->active) {
                     if ($category_link == 0 || $category_link == 1) {
-                        $content = preg_replace('#{{category url=' . $category_link . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', '/' . '" title="' . htmlspecialchars($cat_mapper->name) . '"', $content);
+                        $content = preg_replace('#{{category url=' . $category_link . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', '/' . '" title="' . htmlspecialchars($cat_mapper->name) . '', $content);
                     } else {
                         $category_link_url = $link_model->getCMSCategoryLink($category_link, null, $idLang, $idShop, false);
                         $category_link_url = Sd_eicmslinks::removeBaseUrl($category_link_url);
-                        $content = preg_replace('#{{category url=' . $category_link . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $category_link_url . '" title="' . htmlspecialchars($cat_mapper->name) . '"', $content);
+                        $content = preg_replace('#{{category url=' . $category_link . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $category_link_url . '" title="' . htmlspecialchars($cat_mapper->name) . '', $content);
                     }
                 } else {
-                    $content = preg_replace('#{{category url=' . $category_link . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $category_link_url . '" title="' . htmlspecialchars($cat_mapper->name) . '"', $content);
+                    $content = preg_replace('#{{category url=' . $category_link . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $category_link_url . '" title="' . htmlspecialchars($cat_mapper->name) . '', $content);
                 }
             }
         }
@@ -466,7 +470,7 @@ class Sd_eicmslinks extends Module
 
                 $attachment_url = $link_model->getPageLink('attachment', true, $idLang, 'id_attachment=' . (int)$link_id, false, $idShop, false);
 
-                $content = preg_replace('#{{filelink url=' . $link_id . ' data-idshop=' . $idShop . ' data-idlang=' . $idLang . '}}#', $attachment_url . '" download="download"', $content);
+                $content = preg_replace('#{{filelink url=' . $link_id . ' data-idshop=' . $idShop . ' data-idlang=' . $idLang . '}}#', $attachment_url . '" download="download', $content);
             }
         }
 

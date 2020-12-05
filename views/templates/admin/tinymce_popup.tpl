@@ -37,9 +37,11 @@
              onkeyup="textlinkKeyUp()"/><span>{l s='Ce champ est requis' mod='sd_eicmslinks'}</span><br/>
     </div>
   </div>
-  {*  <div class="relative">*}
-  {*    <label for="eicmslinks_textlink_option_ouverture">{l s='Ouverture nouvelle fenetre' mod='sd_eicmslinks'} : <input type="checkbox" id="eicmslinks_textlink_option_ouverture" name="eicmslinks_textlink_option_ouverture" value="1"/></label>*}
-  {*  </div>*}
+  <div class="relative">
+    <label for="eicmslinks_textlink_option_ouverture">{l s='Ouverture nouvelle fenetre' mod='sd_eicmslinks'} : <input
+              type="checkbox" id="eicmslinks_textlink_option_ouverture" name="eicmslinks_textlink_option_ouverture"
+              value="1"/></label>
+  </div>
 </div>
 
 <div class="clearfix"></div>
@@ -92,6 +94,7 @@
   // mise à jour du text du lien si text sélectionné
   var iframe = window.parent.document.querySelectorAll("iframe");
   var $textlink = document.getElementById("eicmslinks_textlink");
+  var $textlink_option_ouverture = document.getElementById("eicmslinks_textlink_option_ouverture");
   var $textlinkWrapper = document.getElementById("eicmslinks_textlink_wrapper");
 
   /**
@@ -122,6 +125,10 @@
 
   textlinkKeyUp();
 
+  function getLinkTargetHtml() {
+    return $textlink_option_ouverture.checked ? "target='_blank'" : "target='_self'";
+  }
+
   function addNormalLink(url) {
 
     if ($('#eicmslinks_textlink').val() === "") {
@@ -136,7 +143,7 @@
         hideError();
       }
 
-      parent.tinymce.activeEditor.execCommand('mceInsertContent', false, '<a href="' + url + '">' + texte + '</a>');
+      parent.tinymce.activeEditor.execCommand('mceInsertContent', false, '<a href="' + url + '" ' + getLinkTargetHtml() + '>' + texte + '</a>');
       top.tinymce.activeEditor.windowManager.close();
     }
   }
@@ -162,7 +169,7 @@
         hideError();
       }
 
-      parent.tinymce.activeEditor.execCommand('mceInsertContent', false, '<a href="' + url + '">' + texte + '</a>');
+      parent.tinymce.activeEditor.execCommand('mceInsertContent', false, '<a href="' + url + '" ' + getLinkTargetHtml() + '>' + texte + '</a>');
       top.tinymce.activeEditor.windowManager.close();
     }
   }
