@@ -5,7 +5,7 @@
 
       ed.addCommand('mceCmsLinks', function () {
         ed.windowManager.open({
-          title: 'Ajouter un lien dynamique',
+          title: '',
           file: url + '/eicmslinks.php?eicmslinks_sel=' + encodeURIComponent(tinymce.activeEditor.selection.getContent({format: 'text'})) + "&id_language=" + id_language,
           width: 650,
           height: 400,
@@ -16,7 +16,7 @@
 
       });
       ed.addButton('eicmslinks', {
-        title: 'Ajouter un lien dynamique',
+        title: '',
         cmd: 'mceCmsLinks',
         icons: 'eicmslinks',
         className: 'ckeditor_eicmslinks_btn',

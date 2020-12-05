@@ -31,10 +31,19 @@ $cookie = new Cookie('psAdmin', '', (int)Configuration::get('PS_COOKIE_LIFETIME_
 
 if (isset($cookie->id_employee) && $cookie->id_employee) {
 
+    $local = isset($_GET['local']) ? $_GET['local'] : null;
+
     include_once(_PS_MODULE_DIR_ . '/sd_eicmslinks/sd_eicmslinks.php');
 
-//Affichage de la popup d'insertion des cms
+    //Affichage de la popup d'insertion des cms
     $eicmslink = new Sd_eicmslinks();
+
+    $local_arr = json_decode($eicmslink->getLocalCorrespondance(), true);
+
+    if(isset($local_arr[$local])){
+        Context::getContext()->language = new Language($local_arr[$local]);
+    }
+
     $eicmslink->displayTinyMcePopup();
 
 } else {

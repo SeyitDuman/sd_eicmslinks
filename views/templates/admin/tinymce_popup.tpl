@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="{$css_file}">
 </head>
 <body id="eicmslinks_body">
-
 <ul class="menu-link">
   <li class="selected"><a class="show-block-link" rel="product_content"
                           href="#">{l s='Produit' mod='sd_eicmslinks'}</a></li>
@@ -38,9 +37,9 @@
              onkeyup="textlinkKeyUp()"/><span>{l s='Ce champ est requis' mod='sd_eicmslinks'}</span><br/>
     </div>
   </div>
-{*  <div class="relative">*}
-{*    <label for="eicmslinks_textlink_option_ouverture">{l s='Ouverture nouvelle fenetre' mod='sd_eicmslinks'} : <input type="checkbox" id="eicmslinks_textlink_option_ouverture" name="eicmslinks_textlink_option_ouverture" value="1"/></label>*}
-{*  </div>*}
+  {*  <div class="relative">*}
+  {*    <label for="eicmslinks_textlink_option_ouverture">{l s='Ouverture nouvelle fenetre' mod='sd_eicmslinks'} : <input type="checkbox" id="eicmslinks_textlink_option_ouverture" name="eicmslinks_textlink_option_ouverture" value="1"/></label>*}
+  {*  </div>*}
 </div>
 
 <div class="clearfix"></div>
@@ -181,21 +180,10 @@
 
   // id_lang pour les formulaires non moderne
   var id_language_popup = _findGetParameter('id_language');
-  var local = null;
+  var local_popup = _findGetParameter('local');
 
-  if (window.parent.$("#form_switch_language").length) {
-
-    // Exemple : Product
-    local = window.parent.$("#form_switch_language").val();
-  } else if (window.parent.$('.tab-pane.translation-field.active').length) {
-
-    // Exemple : page CMS / Cageorie
-    local = window.parent.$('.tab-pane.translation-field.active').data().locale;
-  }
-
-
-  if (local !== null) {
-    id_language_popup = local_correspondance[local];
+  if (local_popup !== null && local_popup !== "") {
+    id_language_popup = local_correspondance[local_popup];
   }
 
   var eicmslinks_sel = _findGetParameter('eicmslinks_sel');

@@ -23,8 +23,6 @@
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
-
-
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -47,15 +45,16 @@ class Sd_eicmslinks extends Module
     /**
      * @var string
      */
-    protected $_html = "";
+    protected $_html = '';
 
     /**
      * @var string
      */
-    public $module_link = "";
+    public $module_link = '';
 
     /**
      * Sd_eicmslinks constructor.
+     *
      * @throws PrestaShopException
      */
     public function __construct()
@@ -76,13 +75,11 @@ class Sd_eicmslinks extends Module
         $this->confirmUninstall = $this->transMe('Est vous sûr de vouloir désinstaller ce module ?');
 
         // minimum 1.7.1 => possibilité d'utiliser le hook actionOutputHTMLBefore
-        $this->ps_versions_compliancy = array('min' => '1.7.1', 'max' => _PS_VERSION_);
+        $this->ps_versions_compliancy = ['min' => '1.7.1', 'max' => _PS_VERSION_];
         $this->debug_mode = (bool)_PS_MODE_DEV_;
 
         $this->module_link = $this->context->link->getAdminLink('AdminModules', true) . '&configure=' . $this->name . '&tab_module=' . $this->tab . '&module_name=' . $this->name;
-
     }
-
 
     /**
      * @return bool
@@ -90,7 +87,7 @@ class Sd_eicmslinks extends Module
     public function install(): bool
     {
         if ($this->debug_mode) {
-            PrestaShopLogger::addLog("Module Sd_eicmslinks, DEBUT install function");
+            PrestaShopLogger::addLog('Module Sd_eicmslinks, DEBUT install function');
         }
 
         $install_ok = parent::install()
@@ -98,9 +95,8 @@ class Sd_eicmslinks extends Module
             && $this->registerHook('actionOutputHTMLBefore')
             && $this->registerHook('dashboardZoneOne');
 
-
         if ($this->debug_mode) {
-            PrestaShopLogger::addLog("Module Sd_eicmslinks, install function, STEP 1 : " . ($install_ok ? 'OK' : 'KO'));
+            PrestaShopLogger::addLog('Module Sd_eicmslinks, install function, STEP 1 : ' . ($install_ok ? 'OK' : 'KO'));
         }
 
         if (is_dir(realpath(dirname(__FILE__) . '/../../js/tiny_mce/plugins/eicmslinks'))) {
@@ -111,30 +107,29 @@ class Sd_eicmslinks extends Module
         $install_ok = $install_ok && $this->copyDir(realpath(dirname(__FILE__) . '/libs/tiny_mce/'), realpath(dirname(__FILE__) . '/../../js/tiny_mce/plugins'));
 
         if ($this->debug_mode) {
-            PrestaShopLogger::addLog("Module Sd_eicmslinks, install function, STEP 2 : " . ($install_ok ? 'OK' : 'KO'));
+            PrestaShopLogger::addLog('Module Sd_eicmslinks, install function, STEP 2 : ' . ($install_ok ? 'OK' : 'KO'));
         }
 
         $install_ok = $install_ok && Configuration::updateValue('EICMSLINKS_ADMIN_PATH', $this->getAdminFolder());
 
         if ($this->debug_mode) {
-            PrestaShopLogger::addLog("Module Sd_eicmslinks, install function, STEP  3 : " . ($install_ok ? 'OK' : 'KO'));
+            PrestaShopLogger::addLog('Module Sd_eicmslinks, install function, STEP  3 : ' . ($install_ok ? 'OK' : 'KO'));
         }
 
         $install_ok = $install_ok && Configuration::updateValue('EICMSLINKS_SHOW_DONATE', true);
 
         if ($this->debug_mode) {
-            PrestaShopLogger::addLog("Module Sd_eicmslinks, install function, STEP  4 : " . ($install_ok ? 'OK' : 'KO'));
+            PrestaShopLogger::addLog('Module Sd_eicmslinks, install function, STEP  4 : ' . ($install_ok ? 'OK' : 'KO'));
         }
 
         $this->_clearCache('*');
 
         if ($this->debug_mode) {
-            PrestaShopLogger::addLog("Module Sd_eicmslinks, FIN install function : " . ($install_ok ? 'OK' : 'KO'));
+            PrestaShopLogger::addLog('Module Sd_eicmslinks, FIN install function : ' . ($install_ok ? 'OK' : 'KO'));
         }
 
         return $install_ok;
     }
-
 
     /**
      * @return bool
@@ -142,7 +137,7 @@ class Sd_eicmslinks extends Module
     public function uninstall(): bool
     {
         if ($this->debug_mode) {
-            PrestaShopLogger::addLog("Module Sd_eicmslinks, DEBUT uninstall function");
+            PrestaShopLogger::addLog('Module Sd_eicmslinks, DEBUT uninstall function');
         }
 
         $uninstall_ok = parent::uninstall();
@@ -151,7 +146,7 @@ class Sd_eicmslinks extends Module
         $uninstall_ok = $uninstall_ok && $this->deleteDir(dirname(__FILE__) . '/../../js/tiny_mce/plugins/eicmslinks/');
 
         if ($this->debug_mode) {
-            PrestaShopLogger::addLog("Module Sd_eicmslinks, uninstall function, STEP 1 : " . ($uninstall_ok ? 'OK' : 'KO'));
+            PrestaShopLogger::addLog('Module Sd_eicmslinks, uninstall function, STEP 1 : ' . ($uninstall_ok ? 'OK' : 'KO'));
         }
 
         $file_to_delete = realpath(dirname(__FILE__) . '/../../js/tiny_mce/plugins/eicmslinks/plugin.min.js');
@@ -161,25 +156,35 @@ class Sd_eicmslinks extends Module
         }
 
         if ($this->debug_mode) {
-            PrestaShopLogger::addLog("Module Sd_eicmslinks, uninstall function, STEP 2 : " . ($uninstall_ok ? 'OK' : 'KO'));
+            PrestaShopLogger::addLog('Module Sd_eicmslinks, uninstall function, STEP 2 : ' . ($uninstall_ok ? 'OK' : 'KO'));
         }
 
         $uninstall_ok = $uninstall_ok && Configuration::deleteByName('EICMSLINKS_ADMIN_PATH');
 
         if ($this->debug_mode) {
-            PrestaShopLogger::addLog("Module Sd_eicmslinks, FIN uninstall function : " . ($uninstall_ok ? 'OK' : 'KO'));
+            PrestaShopLogger::addLog('Module Sd_eicmslinks, FIN uninstall function : ' . ($uninstall_ok ? 'OK' : 'KO'));
         }
 
         return $uninstall_ok;
     }
 
+    /**
+     * @param $table
+     * @param $field
+     * @return bool
+     */
+    public function tableExistSql($table): bool
+    {
+        $res = Db::getInstance()->executeS("show tables like '" . _DB_PREFIX_ . $table . "';");
+
+        return isset($res[0]) ? true : false;
+    }
 
     /**
      * Hook appelé uniqument en front !
      * Modifie le contenu pour ajouter les liens
      *
      * @param $params => contient la valeur HTML
-     *
      */
     public function hookActionOutputHTMLBefore($params): void
     {
@@ -189,16 +194,12 @@ class Sd_eicmslinks extends Module
     /**
      * Hook appelé uniqument en front !
      * Modifie le contenu pour ajouter les liens
-     *
      */
     public function hookDisplayBackOfficeHeader(): void
     {
         $this->addTinyJS();
     }
 
-    /**
-     *
-     */
     public function addTinyJS(): void
     {
         Media::addJsDef([
@@ -208,22 +209,21 @@ class Sd_eicmslinks extends Module
         Context::getContext()->controller->addJs($this->_path . 'views/js/tinymce.inc.js');
     }
 
-
     /**
      * Mise à jour de l'objet cms pour remplacer les variables d'url des lien
      *
      * @param string|null : contenu ou il faut remplacer les liens
+     *
      * @return string : contenu avec les liens remplacés
      */
-    public static function updateLinks($content = "")
+    public static function updateLinks($content = '')
     {
-        if ($content === null || $content === "") {
+        if ($content === null || $content === '') {
             return $content;
         }
 
         $link_model = new Link();
         $content = urldecode($content);
-
 
         $content = self::updateLinksCMS($link_model, $content);
         $content = self::updateLinksCategoryCms($link_model, $content);
@@ -238,42 +238,39 @@ class Sd_eicmslinks extends Module
         return $content;
     }
 
-
     /**
      * Suppression des liens morts pour éviter des 404
      *
      * @param string $content
+     *
      * @return string|string[]|null
      */
     public static function removeDeadLinks(string $content)
     {
-
-        $content = preg_replace("/<a href=''>(.*?)<\/a>/", "$1", $content);
-        $content = preg_replace('/<a href="">(.*?)<\/a>/', "$1", $content);
+        $content = preg_replace("/<a href=''>(.*?)<\/a>/", '$1', $content);
+        $content = preg_replace('/<a href="">(.*?)<\/a>/', '$1', $content);
 
         return $content;
     }
-
 
     /**
      * Mise à jour des liens vers les pages categories
      *
      * @param Link $link_model
      * @param string $content
+     *
      * @return string|string[]|null
      */
     public static function updateLinksCategoryProduct(Link $link_model, string $content)
     {
-
         preg_match_all('#{{categoryproduct url=([0-9+]{0,12}) data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $content, $category_product_links);
 
         if (isset($category_product_links[1]) && sizeof($category_product_links[1])) {
             foreach ($category_product_links[1] as $key => $category_product_links_id) {
-
                 $idLang = (int)$category_product_links[3][$key];
                 $idShop = (int)$category_product_links[2][$key];
 
-                $category_product_links_url = "";
+                $category_product_links_url = '';
                 $cat_mapper = new Category((int)$category_product_links_id, $idLang, $idShop);
 
                 if (false !== $cat_mapper && (bool)$cat_mapper->active) {
@@ -291,6 +288,7 @@ class Sd_eicmslinks extends Module
     /**
      * @param Link $link_model
      * @param string $content
+     *
      * @return string|string[]|null
      */
     public static function updateLinksSuppliers(Link $link_model, string $content)
@@ -299,11 +297,10 @@ class Sd_eicmslinks extends Module
 
         if (isset($supplier_links[1]) && sizeof($supplier_links[1])) {
             foreach ($supplier_links[1] as $key => $supplier_links_id) {
-
                 $idLang = (int)$supplier_links[3][$key];
                 $idShop = (int)$supplier_links[2][$key];
 
-                $supplier_links_url = "";
+                $supplier_links_url = '';
                 $supplier_mapper = new Supplier((int)$supplier_links_id, $idLang);
 
                 if (false !== $supplier_mapper && (bool)$supplier_mapper->active) {
@@ -321,6 +318,7 @@ class Sd_eicmslinks extends Module
     /**
      * @param Link $link_model
      * @param string $content
+     *
      * @return string|string[]|null
      */
     public static function updateLinksManufacturers(Link $link_model, string $content)
@@ -329,11 +327,10 @@ class Sd_eicmslinks extends Module
 
         if (isset($manufacture_links[1]) && sizeof($manufacture_links[1])) {
             foreach ($manufacture_links[1] as $key => $manufacture_links_id) {
-
                 $idLang = (int)$manufacture_links[3][$key];
                 $idShop = (int)$manufacture_links[2][$key];
 
-                $manufacture_links_url = "";
+                $manufacture_links_url = '';
                 $manufacture_mapper = new Manufacturer((int)$manufacture_links_id, $idLang);
 
                 if (false !== $manufacture_mapper && (bool)$manufacture_mapper->active) {
@@ -348,34 +345,29 @@ class Sd_eicmslinks extends Module
         return $content;
     }
 
-
     /**
      * Mise à jour des liens vers les pages produits
      *
      * @param Link $link_model
      * @param string $content
+     *
      * @return string|string[]|null
      */
     public static function updateLinksProduct(Link $link_model, string $content)
     {
-
         preg_match_all('#{{product url=([0-9+]{0,12}) data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $content, $product_links);
 
         if (isset($product_links[1]) && sizeof($product_links[1])) {
-
             foreach ($product_links[1] as $key => $product_link) {
-
                 $idLang = (int)$product_links[3][$key];
                 $idShop = (int)$product_links[2][$key];
 
-                $product_link_url = "";
+                $product_link_url = '';
                 $product_mapper = new Product((int)$product_link, false, $idLang, $idShop);
 
                 if (false !== $product_mapper && (bool)$product_mapper->active) {
-
                     $product_link_url = $link_model->getProductLink($product_link, null, null, null, $idLang, $idShop);
                     $product_link_url = Sd_eicmslinks::removeBaseUrl($product_link_url);
-
                 }
 
                 $content = preg_replace('#{{product url=' . $product_link . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $product_link_url . '" title="' . htmlspecialchars($product_mapper->name) . '"', $content);
@@ -390,20 +382,19 @@ class Sd_eicmslinks extends Module
      *
      * @param Link $link_model
      * @param string $content
+     *
      * @return string|string[]|null
      */
     public static function updateLinksCMS(Link $link_model, string $content)
     {
-
         preg_match_all('#{{cms url=([0-9+]{0,12}) data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $content, $cms_links);
 
         if (isset($cms_links[1]) && sizeof($cms_links[1])) {
             foreach ($cms_links[1] as $key => $cms_id) {
-
                 $idLang = (int)$cms_links[3][$key];
                 $idShop = (int)$cms_links[2][$key];
 
-                $link_url = "";
+                $link_url = '';
                 $cms_mapper = new Cms((int)$cms_id, $idLang, $idShop);
 
                 if ((false !== $cms_mapper && true === (bool)$cms_mapper->active)) {
@@ -417,7 +408,6 @@ class Sd_eicmslinks extends Module
         }
 
         return $content;
-
     }
 
     /**
@@ -425,25 +415,23 @@ class Sd_eicmslinks extends Module
      *
      * @param Link $link_model
      * @param string $content
+     *
      * @return string|string[]|null
      */
     public static function updateLinksCategoryCms(Link $link_model, string $content)
     {
-
         preg_match_all('#{{category url=([0-9+]{0,12}) data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $content, $category_links);
 
         if (isset($category_links[1]) && sizeof($category_links[1])) {
             foreach ($category_links[1] as $key => $category_link) {
-
                 $idLang = (int)$category_links[3][$key];
                 $idShop = (int)$category_links[2][$key];
 
-                $category_link_url = "";
+                $category_link_url = '';
                 $cat_mapper = new CMSCategory((int)$category_link, $idLang, $idShop);
                 if (false !== $cat_mapper && (bool)$cat_mapper->active) {
-
                     if ($category_link == 0 || $category_link == 1) {
-                        $content = preg_replace('#{{category url=' . $category_link . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', "/" . '" title="' . htmlspecialchars($cat_mapper->name) . '"', $content);
+                        $content = preg_replace('#{{category url=' . $category_link . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', '/' . '" title="' . htmlspecialchars($cat_mapper->name) . '"', $content);
                     } else {
                         $category_link_url = $link_model->getCMSCategoryLink($category_link, null, $idLang, $idShop, false);
                         $category_link_url = Sd_eicmslinks::removeBaseUrl($category_link_url);
@@ -452,8 +440,6 @@ class Sd_eicmslinks extends Module
                 } else {
                     $content = preg_replace('#{{category url=' . $category_link . ' data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $category_link_url . '" title="' . htmlspecialchars($cat_mapper->name) . '"', $content);
                 }
-
-
             }
         }
 
@@ -465,20 +451,19 @@ class Sd_eicmslinks extends Module
      *
      * @param Link $link_model
      * @param string $content
+     *
      * @return string|string[]|null
      */
     public static function updateLinksFiles(Link $link_model, string $content)
     {
-
         preg_match_all('#{{filelink url=([0-9+]{0,12}) data-idshop=([0-9+]{0,12}) data-idlang=([0-9+]{0,12})}}#', $content, $links);
 
         if (isset($links[1]) && sizeof($links[1])) {
             foreach ($links[1] as $key => $link_id) {
-
                 $idLang = (int)$links[3][$key];
                 $idShop = (int)$links[2][$key];
 
-                $attachment_url = $link_model->getPageLink('attachment', true, $idLang, "id_attachment=" . (int)$link_id, false, $idShop, false);
+                $attachment_url = $link_model->getPageLink('attachment', true, $idLang, 'id_attachment=' . (int)$link_id, false, $idShop, false);
 
                 $content = preg_replace('#{{filelink url=' . $link_id . ' data-idshop=' . $idShop . ' data-idlang=' . $idLang . '}}#', $attachment_url . '" download="download"', $content);
             }
@@ -491,6 +476,7 @@ class Sd_eicmslinks extends Module
      * Supprimer le domaine pour url donnée
      *
      * @param string $url
+     *
      * @return mixed
      */
     public static function removeBaseUrl(string $url)
@@ -512,15 +498,15 @@ class Sd_eicmslinks extends Module
      * @param string $msg
      * @param array $parameters
      * @param string $locale
+     *
      * @return mixed|string
      */
-    public function transMe(string $msg, $parameters = array(), $locale = "fr-FR")
+    public function transMe(string $msg, $parameters = [], $locale = 'fr-FR')
     {
         $domain = 'Modules.Sdeicmslinks.Admin';
 
         return $this->trans($msg, $parameters, $domain, $locale);
     }
-
 
     /**
      * Charge la configuration du module
@@ -529,15 +515,14 @@ class Sd_eicmslinks extends Module
      */
     public function getContent()
     {
-        $this->_html = "";
+        $this->_html = '';
 
-        /**
+        /*
          * If values have been submitted in the form, process.
          */
         if (((bool)Tools::isSubmit('submitSdEicmslinksGlobalForm')) == true) {
             $this->postProcess();
         }
-
 
         $this->renderForm();
 
@@ -550,7 +535,6 @@ class Sd_eicmslinks extends Module
 
         return $this->_html;
     }
-
 
     /**
      * Create the form that will be displayed in the configuration of your module.
@@ -573,32 +557,31 @@ class Sd_eicmslinks extends Module
             . '&configure=' . $this->name . '&tab_module=' . $this->tab . '&module_name=' . $this->name;
         $helper->token = Tools::getAdminTokenLite('AdminModules');
 
-        $helper->tpl_vars = array(
-            'uri' => $this->getPathUri() . "views/",
+        $helper->tpl_vars = [
+            'uri' => $this->getPathUri() . 'views/',
             'fields_value' => $this->getConfigFormValues(), /* Add values for your inputs */
             'languages' => $this->context->controller->getLanguages(),
             'id_shop' => $this->context->shop->id,
             'id_language' => $this->context->language->id,
-        );
+        ];
 
-        $this->_html .= $helper->generateForm(array($this->getConfigForm()));
+        $this->_html .= $helper->generateForm([$this->getConfigForm()]);
     }
-
 
     /**
      * Set values for the inputs.
+     *
      * @return mixed
      */
     protected function getConfigFormValues()
     {
-        $ret = array();
+        $ret = [];
 
         $ret['EICMSLINKS_ADMIN_PATH'] = Configuration::get('EICMSLINKS_ADMIN_PATH');
         $ret['EICMSLINKS_SHOW_DONATE'] = Configuration::get('EICMSLINKS_SHOW_DONATE');
 
         return $ret;
     }
-
 
     /**
      * Save form data.
@@ -609,7 +592,6 @@ class Sd_eicmslinks extends Module
         Configuration::updateValue('EICMSLINKS_ADMIN_PATH', Tools::getValue('EICMSLINKS_ADMIN_PATH'));
     }
 
-
     /**
      * Create the structure of your form.
      *
@@ -617,52 +599,51 @@ class Sd_eicmslinks extends Module
      */
     protected function getConfigForm()
     {
-
-        return array(
-            'form' => array(
-                'legend' => array(
+        return [
+            'form' => [
+                'legend' => [
                     'title' => $this->transMe('Configuration'),
                     'icon' => 'icon-cogs',
-                ),
-                'input' => array(
-                    array(
+                ],
+                'input' => [
+                    [
                         'type' => 'text',
                         'label' => $this->transMe('Chemin vers le dossier admin'),
                         'name' => 'EICMSLINKS_ADMIN_PATH',
                         'required' => true,
-                    ),
-                    array(
+                    ],
+                    [
                         'type' => 'switch',
                         'label' => $this->transMe('Afficher le bloc de SOUTIEN'),
                         'name' => 'EICMSLINKS_SHOW_DONATE',
                         'is_bool' => true,
-                        'values' => array(
-                            array(
+                        'values' => [
+                            [
                                 'id' => 'active_on',
                                 'value' => 1,
-                                'label' => $this->trans('Enabled', array(), 'Admin.Global'),
-                            ),
-                            array(
+                                'label' => $this->trans('Enabled', [], 'Admin.Global'),
+                            ],
+                            [
                                 'id' => 'active_off',
                                 'value' => 0,
-                                'label' => $this->trans('Disabled', array(), 'Admin.Global'),
-                            ),
-                        ),
-                    ),
-                ),
-                'submit' => array(
+                                'label' => $this->trans('Disabled', [], 'Admin.Global'),
+                            ],
+                        ],
+                    ],
+                ],
+                'submit' => [
                     'title' => $this->transMe('Enregistrer'),
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
-
 
     /**
      * Copie du contenu d'un dossier vers un autre emplacement
      *
      * @param string $src
      * @param string $dest
+     *
      * @return bool
      */
     public function copyDir(string $src, string $dest): bool
@@ -685,7 +666,7 @@ class Sd_eicmslinks extends Module
         foreach ($i as $f) {
             if ($f->isFile()) {
                 copy($f->getRealPath(), "$dest/" . $f->getFilename());
-            } else if (!$f->isDot() && $f->isDir()) {
+            } elseif (!$f->isDot() && $f->isDir()) {
                 $this->copyDir($f->getRealPath(), "$dest/$f");
             }
         }
@@ -693,12 +674,12 @@ class Sd_eicmslinks extends Module
         return true;
     }
 
-
     /**
      * Supression récursive d'un dossier
      *
      * @param string $dir
-     * @return boolean
+     *
+     * @return bool
      */
     public function deleteDir(string $dir): bool
     {
@@ -707,7 +688,7 @@ class Sd_eicmslinks extends Module
         }
 
         $ret = true;
-        $files = array_diff(scandir($dir), array('.', '..'));
+        $files = array_diff(scandir($dir), ['.', '..']);
 
         foreach ($files as $file) {
             if (is_dir("$dir/$file")) {
@@ -717,12 +698,10 @@ class Sd_eicmslinks extends Module
                     $ret = unlink("$dir/$file");
                 }
             }
-
         }
 
         return rmdir($dir) && $ret;
     }
-
 
     /**
      * @param $categories
@@ -730,6 +709,7 @@ class Sd_eicmslinks extends Module
      * @param int $id_cms_category
      * @param int $id_selected
      * @param int $is_html
+     *
      * @return array|mixed
      */
     public static function recurseCMSCategory($categories, $current, $id_cms_category = 1, $id_selected = 1, $is_html = 0)
@@ -742,6 +722,7 @@ class Sd_eicmslinks extends Module
                 $ret = $ret + self::recurseCMSCategory($categories, $categories[$id_cms_category][$key], $key, $id_selected, $is_html);
             }
         }
+
         return $ret;
     }
 
@@ -753,19 +734,16 @@ class Sd_eicmslinks extends Module
         $id_lang = (int)$_GET['id_language'];
         $id_shop = (int)$_GET['id_shop'];
 
-
         $categories = CMSCategory::getCategories($id_lang, false);
         $categories_ret = self::recurseCMSCategory($categories, $categories[0][1], 1, 1, 0);
 
         $categories_html = '<ul>';
         if (is_array($categories_ret) && count($categories_ret) > 0) {
             foreach ($categories_ret as $key => $name) {
-
                 $categories_html .= '<li><a href="#" onclick="addLink(\'{{category url=' . $key . ' data-idshop=' . $id_shop . ' data-idlang=' . $id_lang . '}}\')">' . $name . '</a></li>';
             }
         }
         $categories_html .= '</ul>';
-
 
         return $categories_html;
     }
@@ -779,7 +757,6 @@ class Sd_eicmslinks extends Module
     {
         $id_lang = (int)$_GET['id_language'];
         $id_shop = (int)$_GET['id_shop'];
-
 
         //Version basique pour l'instant : ne gère qu'un niveau
         $categories = CMSCategory::getRecurseCategory($id_lang);
@@ -831,8 +808,9 @@ class Sd_eicmslinks extends Module
      */
     public function displayTinyMcePopup()
     {
+
         $ajax_page = $this->context->link->getAdminLink('AdminModules') . '&configure=' . $this->name;
-        $ajax_page = str_replace("/1/index.php", "/" . Configuration::get('EICMSLINKS_ADMIN_PATH') . "/index.php", $ajax_page);
+        $ajax_page = str_replace('/1/index.php', '/' . Configuration::get('EICMSLINKS_ADMIN_PATH') . '/index.php', $ajax_page);
 
         $this->context->smarty->assign('local_correspondance', $this->getLocalCorrespondance());
         $this->context->smarty->assign('ajax_page', $ajax_page);
@@ -853,6 +831,7 @@ class Sd_eicmslinks extends Module
 
     /**
      * @return array
+     *
      * @throws PrestaShopException
      */
     protected function getAlternativeLangsUrl()
@@ -872,7 +851,6 @@ class Sd_eicmslinks extends Module
         return $alternativeLangs;
     }
 
-
     /**
      * Get attachments.
      *
@@ -891,9 +869,6 @@ class Sd_eicmslinks extends Module
         );
     }
 
-    /**
-     *
-     */
     public function ajaxProcessGetFileLinkList()
     {
         $id_lang = (int)$_GET['id_language'];
@@ -911,15 +886,12 @@ class Sd_eicmslinks extends Module
             }
             $html .= '</ul>';
         } else {
-            $html .= $this->transMe("Aucun fichier trouvé");
+            $html .= $this->transMe('Aucun fichier trouvé');
         }
 
-        die(json_encode(["success" => true, "html" => trim($html)]));
+        die(json_encode(['success' => true, 'html' => trim($html)]));
     }
 
-    /**
-     *
-     */
     public function ajaxProcessGetOtherLinkList()
     {
         $id_lang = (int)$_GET['id_language'];
@@ -950,35 +922,28 @@ class Sd_eicmslinks extends Module
         $pages['order_login'] = $this->context->link->getPageLink('order', true, $id_lang, ['login' => '1'], false, $id_shop);
         $urls = array_merge($urls, $pages);
 
-
         $html = "<select name='allOtherPage'>";
         $html .= "<option value='-1'>Choisir une valeur</option>";
 
         if ($pages) {
             foreach ($urls as $page_name => $url) {
-                $html .= "<option value='" . $url . "'>" . $page_name . "</option>";
+                $html .= "<option value='" . $url . "'>" . $page_name . '</option>';
             }
         }
 
-        $html .= "<select>";
+        $html .= '<select>';
 
-        die(json_encode(["success" => true, "html" => trim($html)]));
+        die(json_encode(['success' => true, 'html' => trim($html)]));
     }
 
-    /**
-     *
-     */
     public function ajaxProcessGetPageCmsList()
     {
-        die(json_encode(["success" => true, "html" => trim($this->getCmsLinks())]));
+        die(json_encode(['success' => true, 'html' => trim($this->getCmsLinks())]));
     }
 
-    /**
-     *
-     */
     public function ajaxProcessGetCategoriesCmsList()
     {
-        die(json_encode(["success" => true, "html" => trim($this->getCatCmsLinks())]));
+        die(json_encode(['success' => true, 'html' => trim($this->getCatCmsLinks())]));
     }
 
     /**
@@ -989,21 +954,21 @@ class Sd_eicmslinks extends Module
         $id_lang = (int)$_GET['id_language'];
         $id_shop = (int)$_GET['id_shop'];
 
-        $sql = "SELECT p.id_product as id,p.reference, pl.name
-				FROM " . _DB_PREFIX_ . "product p
-				LEFT JOIN " . _DB_PREFIX_ . "product_lang pl ON ( p.id_product = pl.id_product)
-				WHERE pl.id_lang = " . $id_lang . "
-				AND pl.id_shop = " . $id_shop . "
+        $sql = 'SELECT p.id_product as id,p.reference, pl.name
+				FROM ' . _DB_PREFIX_ . 'product p
+				LEFT JOIN ' . _DB_PREFIX_ . 'product_lang pl ON ( p.id_product = pl.id_product)
+				WHERE pl.id_lang = ' . $id_lang . '
+				AND pl.id_shop = ' . $id_shop . '
 				AND p.active=1
-				ORDER BY pl.name";
+				ORDER BY pl.name';
 
         //Récupération des produits
         $products = Db::getInstance()->ExecuteS($sql);
 
-        $listeLiProduct = "";
+        $listeLiProduct = '';
 
         foreach ($products as $key => $product) {
-            $listeLiProduct .= '<li data-id="' . $product['id'] . '"><a href="#" onclick="addLink(\'{{product url=' . $product['id'] . ' data-idshop=' . $id_shop . ' data-idlang=' . $id_lang . '}}\')"><span>' . $product["name"] . '</span></a></li>';
+            $listeLiProduct .= '<li data-id="' . $product['id'] . '"><a href="#" onclick="addLink(\'{{product url=' . $product['id'] . ' data-idshop=' . $id_shop . ' data-idlang=' . $id_lang . '}}\')"><span>' . $product['name'] . '</span></a></li>';
         }
 
         $html = '<div class="panel-content">
@@ -1012,13 +977,9 @@ class Sd_eicmslinks extends Module
                  <div id="listProductNameMsg" style="display:none;">' . $this->transMe('Aucun résultat') . '</div>
                  </div>';
 
-        die(json_encode(["success" => true, "html" => trim($html)]));
+        die(json_encode(['success' => true, 'html' => trim($html)]));
     }
 
-
-    /**
-     *
-     */
     public function ajaxProcessGetMarqueList()
     {
         $id_lang = (int)$_GET['id_language'];
@@ -1031,23 +992,19 @@ class Sd_eicmslinks extends Module
 
         if ($manufacturers) {
             foreach ($manufacturers as $manufacturer) {
-                $ret .= "<option value='" . $manufacturer['id_manufacturer'] . "'>" . htmlspecialchars(trim($manufacturer['name'])) . "</option>";
+                $ret .= "<option value='" . $manufacturer['id_manufacturer'] . "'>" . htmlspecialchars(trim($manufacturer['name'])) . '</option>';
             }
         }
 
-        $ret .= "<select>";
+        $ret .= '<select>';
 
-        die(json_encode(["success" => true, "html" => $ret]));
+        die(json_encode(['success' => true, 'html' => $ret]));
     }
 
-    /**
-     *
-     */
     public function ajaxProcessGetFournisseurList()
     {
         $id_lang = (int)$_GET['id_language'];
         $id_shop = (int)$_GET['id_shop'];
-
 
         $suppliers = Supplier::getSuppliers(false, (int)$id_lang, true, false, false, false, false);
 
@@ -1056,15 +1013,14 @@ class Sd_eicmslinks extends Module
 
         if ($suppliers) {
             foreach ($suppliers as $supplier) {
-                $ret .= "<option value='" . $supplier['id_supplier'] . "'>" . htmlspecialchars(trim($supplier['name'])) . "</option>";
+                $ret .= "<option value='" . $supplier['id_supplier'] . "'>" . htmlspecialchars(trim($supplier['name'])) . '</option>';
             }
         }
 
-        $ret .= "<select>";
+        $ret .= '<select>';
 
-        die(json_encode(["success" => true, "html" => $ret]));
+        die(json_encode(['success' => true, 'html' => $ret]));
     }
-
 
     /**
      * @throws PrestaShopException
@@ -1073,7 +1029,6 @@ class Sd_eicmslinks extends Module
     {
         $id_lang = (int)$_GET['id_language'];
         $id_shop = (int)$_GET['id_shop'];
-
 
         $id_category = 0;
 
@@ -1085,7 +1040,7 @@ class Sd_eicmslinks extends Module
             }
         }
 
-        $tree_categories_helper = new HelperTreeCategories('categories-treeview', "", $id_category, $id_lang);
+        $tree_categories_helper = new HelperTreeCategories('categories-treeview', '', $id_category, $id_lang);
 
         $tree_categories_helper->setLang($id_lang);
         $tree_categories_helper->setShop($id_shop);
@@ -1096,20 +1051,18 @@ class Sd_eicmslinks extends Module
             ->setInputName('id-category-for-insert')
             ->render();
 
-        die(json_encode(["success" => true, "html" => trim($html)]));
+        die(json_encode(['success' => true, 'html' => trim($html)]));
     }
-
 
     /**
      * @return mixed
      */
     public function getAdminFolder()
     {
-
         $r = $_SERVER['REQUEST_URI'];
         $r = explode('/', $r);
         $r = array_filter($r);
-        $r = array_merge($r, array());
+        $r = array_merge($r, []);
         $r = preg_replace('/\?.*/', '', $r);
 
         return $r[0];
@@ -1121,23 +1074,23 @@ class Sd_eicmslinks extends Module
     public function getDonateTemplateHtml()
     {
         $this->context->smarty->assign(
-            array(
-                'paypal_donate_img' => "/modules/" . $this->name . '/views/img/paypal_donate.jpg',
-                'paypal_donate_img_qr' => "/modules/" . $this->name . '/views/img/paypal_donate_code_qr.png'
-            )
+            [
+                'paypal_donate_img' => '/modules/' . $this->name . '/views/img/paypal_donate.jpg',
+                'paypal_donate_img_qr' => '/modules/' . $this->name . '/views/img/paypal_donate_code_qr.png',
+            ]
         );
 
         return $this->display(__FILE__, 'views/templates/admin/paypal_donation.tpl');
     }
 
-
     /**
      * @param array $params (from to date)
+     *
      * @return string
      */
     public function hookDashboardZoneOne(array $params)
     {
-        $ret = "";
+        $ret = '';
         $id_shop = (int)Context::getContext()->shop->id;
         $id_shop_group = Context::getContext()->shop->id_shop_group;
 
@@ -1149,14 +1102,10 @@ class Sd_eicmslinks extends Module
         return $ret;
     }
 
-
-    /**
-     *
-     */
     public function updateModulePositionInDashBoard()
     {
         foreach ($this->getPossibleHooksList() as $key => $hook) {
-            if ($hook['name'] === "dashboardZoneOne") {
+            if ($hook['name'] === 'dashboardZoneOne') {
                 $this->updatePosition((int)$hook['id_hook'], 0, 1);
             }
         }
