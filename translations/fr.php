@@ -3,10 +3,11 @@
 global $_MODULE;
 $_MODULE = array();
 $_MODULE['<{sd_eicmslinks}prestashop>module_disabled_msg_c783abac741b47c686f8c8d0ebc9a972'] = 'Ajouter des liens dynamiques';
-$_MODULE['<{sd_eicmslinks}prestashop>module_disabled_msg_43354026c7bf79fb93717ddd40d4f03b'] = 'Le module "Eicmslink" est désactivé';
+$_MODULE['<{sd_eicmslinks}prestashop>module_disabled_msg_43354026c7bf79fb93717ddd40d4f03b'] = 'Le module \"Eicmslink\" est désactivé';
 $_MODULE['<{sd_eicmslinks}prestashop>module_disabled_msg_d3319112e67bc8ad457e9667dacb1528'] = 'veuillez l\'activer ou le réinitialiser';
-$_MODULE['<{sd_eicmslinks}prestashop>paypal_donation_671b0a53c22ab7e51d462839aebc07d9'] = 'Soutien';
+$_MODULE['<{sd_eicmslinks}prestashop>paypal_donation_9aff5831d24790d4476216e032d34a39'] = 'Module SEO - Référencement - Eicmslink';
 $_MODULE['<{sd_eicmslinks}prestashop>paypal_donation_7134cb03047db1ccd02788823a94aa0d'] = 'Participer au soutien des développeurs, faites un don, peut importe le montant.';
+$_MODULE['<{sd_eicmslinks}prestashop>paypal_donation_67f9beb82e10fea3534cd03d9fdca714'] = 'Cacher ce bloc depuis la configuration du module';
 $_MODULE['<{sd_eicmslinks}prestashop>tinymce_popup_c783abac741b47c686f8c8d0ebc9a972'] = 'Ajouter des liens dynamiques';
 $_MODULE['<{sd_eicmslinks}prestashop>tinymce_popup_e30e2cb9aa296049a2d8ba40f41b7f8a'] = 'Produit';
 $_MODULE['<{sd_eicmslinks}prestashop>tinymce_popup_173576d6ba09171a421071498238e4bd'] = 'Catégorie de produit';
