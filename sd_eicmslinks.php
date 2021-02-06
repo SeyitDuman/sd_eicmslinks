@@ -536,7 +536,7 @@ class Sd_eicmslinks extends Module
         $id_shop_group = Context::getContext()->shop->id_shop_group;
 
         if (Configuration::get('EICMSLINKS_SHOW_DONATE', null, $id_shop_group, $id_shop)) {
-            $this->_html .= $this->getDonateTemplateHtml();
+            $this->_html .= $this->getDonateTemplateHtml(true);
         }
 
         return $this->_html;
@@ -1044,14 +1044,18 @@ class Sd_eicmslinks extends Module
     /**
      * @return false|string
      */
-    public function getDonateTemplateHtml()
+    public function getDonateTemplateHtml($hide_lien_module = false)
     {
-        $this->context->smarty->assign(
-            [
-                'paypal_donate_img' => $this->context->link->getBaseLink() . '/modules/' . $this->name . '/views/img/paypal_donate.jpg',
-                'paypal_donate_img_qr' => $this->context->link->getBaseLink() . '/modules/' . $this->name . '/views/img/paypal_donate_code_qr.png',
-            ]
-        );
+        $assign_arr = [
+            'paypal_donate_img' => $this->context->link->getBaseLink() . '/modules/' . $this->name . '/views/img/paypal_donate.jpg',
+            'paypal_donate_img_qr' => $this->context->link->getBaseLink() . '/modules/' . $this->name . '/views/img/paypal_donate_code_qr.png',
+        ];
+
+        if (!$hide_lien_module) {
+            $assign_arr['lien_module'] = $this->module_link;
+        }
+
+        $this->context->smarty->assign($assign_arr);
 
         return $this->display(__FILE__, 'views/templates/admin/paypal_donation.tpl');
     }

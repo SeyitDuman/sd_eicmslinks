@@ -1,3 +1,7 @@
+.adminmodules .eicmslink-link-module{
+  display: none;
+}
+
 #eicmslinks_body {
   font: 400 14px/1.42857 Open Sans, Helvetica, Arial, sans-serif;
 }
@@ -252,7 +256,7 @@ label[for=eicmslinks_textlink_option_ouverture] {
   display: block;
 }
 
-#categories-treeview .tree{
+#categories-treeview .tree {
   display: block !important;
 }
 
@@ -267,7 +271,7 @@ label[for=eicmslinks_textlink_option_ouverture] {
   width: 100%;
 }
 
-.tt-dropdown-menu{
+.tt-dropdown-menu {
   box-shadow: inset 0px 0px 2px 2px #c1bcbc;
   padding: 0 10px;
 }
