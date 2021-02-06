@@ -61,7 +61,7 @@ class Sd_eicmslinks extends Module
     {
         $this->name = 'sd_eicmslinks';
         $this->tab = 'others';
-        $this->version = '1.0.3';
+        $this->version = '1.0.4';
         $this->author = 'Seyit Duman';
         $this->need_instance = 0;
 
