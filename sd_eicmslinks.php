@@ -187,7 +187,7 @@ class Sd_eicmslinks extends Module
      *
      * @param $params => contient la valeur HTML
      */
-    public function hookActionOutputHTMLBefore($params): void
+    public function hookActionOutputHTMLBefore($params)
     {
         $params['html'] = Sd_eicmslinks::updateLinks($params['html']);
     }
@@ -196,12 +196,12 @@ class Sd_eicmslinks extends Module
      * Hook appelé uniqument en front !
      * Modifie le contenu pour ajouter les liens
      */
-    public function hookDisplayBackOfficeHeader(): void
+    public function hookDisplayBackOfficeHeader()
     {
         $this->addTinyJS();
     }
 
-    public function addTinyJS(): void
+    public function addTinyJS()
     {
         Media::addJsDef([
             'id_shop' => Context::getContext()->shop->id,
