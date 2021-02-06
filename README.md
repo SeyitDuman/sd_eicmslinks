@@ -25,6 +25,9 @@ Exemple :
  - Multilanguage :white_check_mark:
  - Multistore :white_check_mark:
  - Module using custom TinyMCE plugin :x:
+ - Minimum PHP version 7.0 for PrestaShop 1.7.1 to 1.7.5 ~ 1.7.6
+ - Minimum PHP version 7.1 for PrestaShop 1.7.x
+ - Recommended PHP version => ( More info => https://devdocs.prestashop.com/1.7/basics/installation/system-requirements/ )
 
 
 ## License
