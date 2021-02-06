@@ -13,89 +13,13 @@ window.editorLoadedCheckCpt = 0;
 
 // le nombre de fois où l'on doit vérifié le chargement
 window.editorLoadedToCheckCpt = -1; // -1 pour infini
+//
+// // Si le merge de config TinyMce est fonctionnel dans le fichier \js\admin\tinymce.inc.js
+// window.needLoadCustomEditor = typeof window.defaultTinyMceConfig === 'undefined';
 
-// Si le merge de config TinyMce est fonctionnel dans le fichier \js\admin\tinymce.inc.js
-window.needLoadCustomEditor = typeof window.defaultTinyMceConfig === 'undefined';
-
-// notre configuration TinyMce
 window.defaultTinyMceConfig = {
-  selector: ".rte",
-  plugins: "align colorpicker link image filemanager table media placeholder advlist code table autoresize eicmslinks",
-  browser_spellcheck: true,
-  toolbar1: "code,colorpicker,bold,italic,underline,strikethrough,blockquote,link,align,bullist,numlist,table,image,media,formatselect",
+  plugins: "align colorpicker eicmslinks link image filemanager table media placeholder advlist code table autoresize",
   toolbar2: "eicmslinks",
-  external_filemanager_path: baseAdminDir + "filemanager/",
-  filemanager_title: "File manager",
-  external_plugins: {"filemanager": baseAdminDir + "filemanager/plugin.min.js"},
-  language: iso_user,
-  content_style: (typeof lang_is_rtl !== "undefined" && lang_is_rtl === '1' ? "body {direction:rtl;}" : ""),
-  skin: "prestashop",
-  menubar: false,
-  statusbar: false,
-  relative_urls: false,
-  convert_urls: false,
-  entity_encoding: "raw",
-  extended_valid_elements: "em[class|name|id],@[role|data-*|aria-*]",
-  valid_children: "+*[*]",
-  valid_elements: "*[*]",
-  init_instance_callback: "window.changeToMaterial",
-  rel_list: [
-    {title: 'nofollow', value: 'nofollow'}
-  ],
-  setup: function (ed) {
-    ed.on('loadContent', function (ed, e) {
-      window.handleCounterTiny(tinymce.activeEditor.id);
-    });
-    ed.on('change', function (ed, e) {
-      tinyMCE.triggerSave();
-      window.handleCounterTiny(tinymce.activeEditor.id);
-    });
-    ed.on('blur', function (ed) {
-      tinyMCE.triggerSave();
-    });
-  }
-};
-
-window.changeToMaterial = function () {
-  let materialIconAssoc = {
-    'mce-i-code': '<i class="material-icons">code</i>',
-    'mce-i-none': '<i class="material-icons">format_color_text</i>',
-    'mce-i-bold': '<i class="material-icons">format_bold</i>',
-    'mce-i-italic': '<i class="material-icons">format_italic</i>',
-    'mce-i-underline': '<i class="material-icons">format_underlined</i>',
-    'mce-i-strikethrough': '<i class="material-icons">format_strikethrough</i>',
-    'mce-i-blockquote': '<i class="material-icons">format_quote</i>',
-    'mce-i-link': '<i class="material-icons">link</i>',
-    'mce-i-alignleft': '<i class="material-icons">format_align_left</i>',
-    'mce-i-aligncenter': '<i class="material-icons">format_align_center</i>',
-    'mce-i-alignright': '<i class="material-icons">format_align_right</i>',
-    'mce-i-alignjustify': '<i class="material-icons">format_align_justify</i>',
-    'mce-i-bullist': '<i class="material-icons">format_list_bulleted</i>',
-    'mce-i-numlist': '<i class="material-icons">format_list_numbered</i>',
-    'mce-i-image': '<i class="material-icons">image</i>',
-    'mce-i-table': '<i class="material-icons">grid_on</i>',
-    'mce-i-media': '<i class="material-icons">video_library</i>',
-    'mce-i-browse': '<i class="material-icons">attachment</i>',
-    'mce-i-checkbox': '<i class="mce-ico mce-i-checkbox"></i>',
-  };
-
-  $.each(materialIconAssoc, function (index, value) {
-    $('.' + index).replaceWith(value);
-  });
-};
-
-window.handleCounterTiny = function (id) {
-  let textarea = $('#' + id);
-  let counter = textarea.attr('counter');
-  let counter_type = textarea.attr('counter_type');
-  let max = tinyMCE.activeEditor.getBody().textContent.length;
-
-  textarea.parent().find('span.currentLength').text(max);
-  if ('recommended' !== counter_type && max > counter) {
-    textarea.parent().find('span.maxLength').addClass('text-danger');
-  } else {
-    textarea.parent().find('span.maxLength').removeClass('text-danger');
-  }
 };
 
 window.updateTinyMce = function () {
@@ -107,11 +31,11 @@ window.updateTinyMce = function () {
     if (window.editorLoaded.indexOf(editor.id) === -1) {
 
       // si notre plugin n'est pas chargé de base
-      if(typeof editor.plugins.eicmslinks === "undefined"){
-        tinyMCE.settings = window.defaultTinyMceConfig;
+      if (typeof editor.plugins.eicmslinks === "undefined") {
+
         tinyMCE.EditorManager.execCommand('mceRemoveEditor', false, editor.id);
         tinyMCE.EditorManager.execCommand('mceAddEditor', false, editor.id);
-        tinyMCE.settings = window.defaultTinyMceConfig;
+
       }
 
       window.editorLoaded.push(editor.id);
@@ -120,6 +44,12 @@ window.updateTinyMce = function () {
 };
 
 window.processTinyMce = function () {
+
+  // on effectue l'action 1 fois
+  tinyMCE.settings.plugins = tinyMCE.settings.plugins.replace(',link,', ',eicmslinks,link,');
+  tinyMCE.settings.toolbar1 = tinyMCE.settings.toolbar1.replace(',link,', ',eicmslinks,link,');
+  tinyMCE.settings.autoresize_on_init = true;
+
   // les tinyMCE editors mettent parfois plus de temps à charger
   var interval_time = setInterval(window.updateTinyMce, 1000);
 
