@@ -1027,7 +1027,6 @@ class Sd_eicmslinks extends Module
         die(json_encode(['success' => true, 'html' => $ret]));
     }
 
-
     /**
      * @return mixed
      */
@@ -1049,8 +1048,8 @@ class Sd_eicmslinks extends Module
     {
         $this->context->smarty->assign(
             [
-                'paypal_donate_img' => '/modules/' . $this->name . '/views/img/paypal_donate.jpg',
-                'paypal_donate_img_qr' => '/modules/' . $this->name . '/views/img/paypal_donate_code_qr.png',
+                'paypal_donate_img' => $this->context->link->getBaseLink() . '/modules/' . $this->name . '/views/img/paypal_donate.jpg',
+                'paypal_donate_img_qr' => $this->context->link->getBaseLink() . '/modules/' . $this->name . '/views/img/paypal_donate_code_qr.png',
             ]
         );
 
@@ -1090,7 +1089,6 @@ class Sd_eicmslinks extends Module
         return true;
     }
 
-
     /**
      * @throws PrestaShopException
      */
@@ -1115,12 +1113,11 @@ class Sd_eicmslinks extends Module
             ->setRootCategory($id_category)
             ->setUseSearch(false) // si true problème event
             ->setUseCheckBox(false)
-            ->setSelectedCategories(array())
+            ->setSelectedCategories([])
             ->setNoJS(false) // si true error JS core
             ->setFullTree(true)
             ->setChildrenOnly(false)
-            ->setInputName('id-category-for-insert')
-        ;
+            ->setInputName('id-category-for-insert');
 
         $html = $tree_categories_helper->render();
 
